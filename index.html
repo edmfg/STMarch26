@@ -79,9 +79,328 @@
       }
       .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #00CC00; }
       ::-webkit-scrollbar { width: 0px; }
+
+      /* ===== MOBILE / TABLET RESPONSIVENESS ===== */
+
+      @media (max-width: 767px) {
+
+        /* --- Global containment --- */
+        #root {
+          max-width: 100vw;
+          overflow-x: hidden;
+        }
+
+        /* --- Frame border: shrink on mobile --- */
+        .frame-border {
+          border-width: 10px !important;
+        }
+        .frame-text { font-size: 7px; }
+        .frame-top { top: -9px; }
+        .frame-bottom { bottom: -9px; }
+
+        /* --- HERO: Scale "SCROLL" & "TELL" Modak text to fit viewport --- */
+        h1, h2 {
+          max-width: 100vw !important;
+          overflow-wrap: break-word !important;
+        }
+        /* Target Modak hero text via font-family (more reliable than bracket selectors) */
+        [style*="Modak"],
+        .mobile-hero-scale {
+          font-size: clamp(3rem, 18vw, 8rem) !important;
+          line-height: 0.85 !important;
+        }
+        /* Target 6xl text (& symbol and TELL on small screens) */
+        [class*="text-6xl"] {
+          font-size: clamp(2.5rem, 14vw, 3.75rem) !important;
+          line-height: 0.85 !important;
+        }
+        /* Reduce hero gap-8 between & and TELL */
+        [class*="gap-8"] {
+          gap: 0.75rem !important;
+        }
+
+        /* --- Padding reductions --- */
+        [class*="px-16"], [class*="px-20"], [class*="px-24"] {
+          padding-left: 1rem !important;
+          padding-right: 1rem !important;
+        }
+        [class*="px-8"], [class*="px-12"] {
+          padding-left: 0.75rem !important;
+          padding-right: 0.75rem !important;
+        }
+        [class*="p-16"], [class*="p-20"], [class*="p-24"] {
+          padding: 1rem !important;
+        }
+        [class*="p-8"], [class*="p-12"] {
+          padding: 0.75rem !important;
+        }
+
+        /* --- Fixed-width element overrides --- */
+        [class*="w-[280px]"], [class*="w-[360px]"], [class*="w-[400px]"],
+        [class*="w-[500px]"], [class*="w-[600px]"], [class*="w-[800px]"] {
+          width: 100% !important;
+          max-width: 100% !important;
+        }
+        [class*="max-w-[400px]"], [class*="max-w-[500px]"],
+        [class*="max-w-[600px]"], [class*="max-w-[800px]"] {
+          max-width: 100% !important;
+        }
+        [class*="min-w-["] {
+          min-width: 0 !important;
+        }
+
+        /* --- Phone mockup scaling --- */
+        [class*="w-[280px]"][class*="h-[560px]"],
+        [class*="w-[280px]"][class*="h-["] {
+          width: min(280px, calc(100vw - 2rem)) !important;
+          height: auto !important;
+          aspect-ratio: 1 / 2;
+        }
+
+        /* --- TABLE → STACKED CARDS (Analog Ledger section) ---
+             Converts the 4-column table into vertically stacked rows.
+             Each row becomes a card with stacked content. */
+
+        /* Kill horizontal scroll on the wrapper */
+        [class*="overflow-x-auto"] {
+          overflow-x: visible !important;
+        }
+
+        /* Make table, thead, tbody, tr, th, td all block-level */
+        table[class*="border-collapse"],
+        table[class*="border-collapse"] thead,
+        table[class*="border-collapse"] tbody,
+        table[class*="border-collapse"] tr,
+        table[class*="border-collapse"] th,
+        table[class*="border-collapse"] td {
+          display: block !important;
+          width: 100% !important;
+          text-align: left !important;
+        }
+
+        /* Hide the table header row — we'll use data context instead */
+        table[class*="border-collapse"] thead {
+          display: none !important;
+        }
+
+        /* Style each row as a stacked card */
+        table[class*="border-collapse"] tbody tr,
+        .rainbow-hover-row {
+          display: flex !important;
+          flex-direction: column !important;
+          padding: 1rem 0 !important;
+          border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+          gap: 0.25rem !important;
+        }
+
+        /* All table cells: full width, remove nowrap, natural wrapping */
+        table[class*="border-collapse"] td {
+          white-space: normal !important;
+          overflow: visible !important;
+          text-overflow: unset !important;
+          max-width: 100% !important;
+          padding: 0.15rem 0.75rem !important;
+          word-break: break-word !important;
+        }
+
+        /* Columnist name — small label style */
+        table[class*="border-collapse"] td:nth-child(1) {
+          font-size: 0.7rem !important;
+          letter-spacing: 0.08em !important;
+          opacity: 0.5;
+          order: 1;
+        }
+
+        /* Column name — prominent */
+        table[class*="border-collapse"] td:nth-child(2) {
+          font-size: 1.1rem !important;
+          font-weight: 900 !important;
+          letter-spacing: -0.02em !important;
+          order: 2;
+        }
+
+        /* This Month's Headline — medium */
+        table[class*="border-collapse"] td:nth-child(3) {
+          font-size: 0.85rem !important;
+          order: 3;
+          opacity: 0.8;
+        }
+
+        /* Archive link — small, right-aligned */
+        table[class*="border-collapse"] td:nth-child(4) {
+          font-size: 0.6rem !important;
+          order: 4;
+          opacity: 0.3;
+        }
+
+        /* Also handle .archive-table the same way */
+        .archive-table,
+        .archive-table tbody,
+        .archive-table tr,
+        .archive-table td {
+          display: block !important;
+          width: 100% !important;
+        }
+        .archive-table thead { display: none !important; }
+        .archive-table tr {
+          padding: 0.75rem 0 !important;
+          border-bottom: 1px solid rgba(0,0,0,0.15) !important;
+        }
+        .archive-table td {
+          border: none !important;
+          padding: 0.15rem 0.5rem !important;
+          white-space: normal !important;
+          font-size: 0.85rem !important;
+        }
+
+        /* --- Scale other large text --- */
+        [class*="text-7xl"], [class*="text-8xl"], [class*="text-9xl"] {
+          font-size: clamp(2rem, 12vw, 4rem) !important;
+          line-height: 1.1 !important;
+        }
+
+        /* --- Large box-shadows --- */
+        [class*="shadow-[40px"], [class*="shadow-[30px"],
+        [class*="shadow-[20px"] {
+          box-shadow: 4px 4px 0 0 currentColor !important;
+        }
+
+        /* --- Grid: full-width columns on mobile --- */
+        [class*="grid-cols-12"] {
+          grid-template-columns: repeat(6, 1fr) !important;
+        }
+        [class*="col-span-6"], [class*="col-span-4"], [class*="col-span-3"] {
+          grid-column: span 6 !important;
+        }
+
+        /* --- Media elements --- */
+        img, video, iframe, svg {
+          max-width: 100% !important;
+          height: auto !important;
+        }
+
+        /* --- Gap reduction --- */
+        [class*="gap-12"], [class*="gap-16"] {
+          gap: 1rem !important;
+        }
+
+        /* --- Large top margins --- */
+        [class*="mt-40"] {
+          margin-top: 4rem !important;
+        }
+      }
+
+      /* ===== EXTRA SMALL: iPhone SE / 375px and below ===== */
+      @media (max-width: 375px) {
+        .frame-border {
+          border-width: 5px !important;
+        }
+        .frame-top, .frame-bottom { display: none; }
+
+        [class*="text-[8rem]"], [class*="text-[12rem]"] {
+          font-size: clamp(2.5rem, 16vw, 5rem) !important;
+        }
+        [class*="text-6xl"] {
+          font-size: clamp(2rem, 12vw, 3rem) !important;
+        }
+        [class*="px-8"], [class*="px-6"] {
+          padding-left: 0.5rem !important;
+          padding-right: 0.5rem !important;
+        }
+        table[class*="border-collapse"] td:nth-child(2) {
+          font-size: 0.95rem !important;
+        }
+      }
+
+      /* ===== JS-BASED DEVICE DETECTION OVERRIDES ===== */
+      /* These fire regardless of media query, based on actual device detection */
+      body.is-mobile #root {
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      body.is-mobile table {
+        display: block !important;
+        width: 100% !important;
+      }
+      body.is-mobile table thead {
+        display: none !important;
+      }
+      body.is-mobile table tbody {
+        display: block !important;
+        width: 100% !important;
+      }
+      body.is-mobile table tbody tr {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        padding: 1rem 0.75rem !important;
+        border-bottom: 1px solid rgba(0,0,0,0.1) !important;
+        gap: 0.25rem !important;
+      }
+      body.is-mobile table td,
+      body.is-mobile table th {
+        display: block !important;
+        width: 100% !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: unset !important;
+        max-width: 100% !important;
+        padding: 0.15rem 0 !important;
+        text-align: left !important;
+        word-break: break-word !important;
+      }
+      body.is-mobile table td:nth-child(1) {
+        font-size: 0.7rem !important;
+        opacity: 0.5;
+        order: 1;
+      }
+      body.is-mobile table td:nth-child(2) {
+        font-size: 1.1rem !important;
+        font-weight: 900 !important;
+        order: 2;
+      }
+      body.is-mobile table td:nth-child(3) {
+        font-size: 0.85rem !important;
+        order: 3;
+        opacity: 0.8;
+      }
+      body.is-mobile table td:nth-child(4) {
+        font-size: 0.6rem !important;
+        order: 4;
+        opacity: 0.3;
+      }
+      body.is-mobile .frame-border {
+        border-width: 8px !important;
+      }
     </style>
   </head>
   <body>
+    <!-- Device detection: adds .is-mobile or .is-desktop to <body> -->
+    <script>
+    (function(){
+      var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)
+        || (window.innerWidth <= 768);
+      document.body.classList.add(isMobile ? 'is-mobile' : 'is-desktop');
+      // Also observe and fix Modak hero text after React renders
+      var observer = new MutationObserver(function(){
+        if(document.body.classList.contains('is-mobile')){
+          document.querySelectorAll('[style*="Modak"], [class*="Modak"]').forEach(function(el){
+            el.style.fontSize = 'clamp(3rem, 18vw, 8rem)';
+            el.style.lineHeight = '0.85';
+          });
+          // Fix all whitespace-nowrap cells inside tables
+          document.querySelectorAll('td[class*="whitespace-nowrap"], th[class*="whitespace-nowrap"]').forEach(function(el){
+            el.style.whiteSpace = 'normal';
+            el.style.maxWidth = '100%';
+            el.style.overflow = 'visible';
+          });
+        }
+      });
+      observer.observe(document.getElementById('root') || document.body, {childList:true, subtree:true});
+      // Disconnect after 10s to avoid perf overhead
+      setTimeout(function(){ observer.disconnect(); }, 10000);
+    })();
+    </script>
     <div class="grain-overlay"></div>
     <div id="root"></div>
     <script>
